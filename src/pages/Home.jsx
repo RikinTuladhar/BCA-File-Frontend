@@ -17,7 +17,7 @@ const Home = () => {
     { id: 8, name: "Semester 8" },
   ]);
   return (
-    <div className="w-full min-h-[100vh]">
+    <div className="px-2 py-2 md:px-5 md:py-5 min-h-[100vh]">
       <NavBar />
 
       <UserBodyContainer>

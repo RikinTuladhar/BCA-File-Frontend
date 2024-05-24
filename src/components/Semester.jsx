@@ -13,7 +13,7 @@ const Semester = () => {
   const { id } = useParams();
   const location = useLocation();
   const {getSemester}  =SubjectApi();
-  // const subjects = [
+
 
   //   {
   //     id: 1,
@@ -120,7 +120,7 @@ const Semester = () => {
       <UserBodyContainer>
         {/* <BreadScrum /> */}
         {!isSubjectRoute && (
-          <div className={`w-ful mt-10 h-[auto] grid ${ datas.length > 0 ? " md:grid-cols-4 gap-5 " : "place-content-center"  }  items-center`}>
+          <div className={`w-ful mt-10 min-h-[50vh] grid ${ datas.length > 0 ? " md:grid-cols-4 gap-5 " : "place-content-center"  }  items-center`}>
             {/* {data?.map((card, id) => (
               <Link to={`subject/${id}`} key={id}>
                 <Card name={card} />
@@ -132,7 +132,7 @@ const Semester = () => {
                 </Link>
               ))) : (
                 <div className="flex w-full ">
-                  <h1 className="text-2xl font-bold text-center text-red-700 md:text-5xl">Subjects not found</h1>
+                  <Card name={data?.name} />
                 </div>
               )
             }

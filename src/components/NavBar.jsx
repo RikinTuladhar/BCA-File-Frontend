@@ -1,13 +1,24 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { reloadConext } from "../GlobalContext/ReloadProvider";
 const NavBar = () => {
-  const [click, setClick] = useState(false);  
-  const [token,setToken] = useState(localStorage.getItem("token"));
+  const [click, setClick] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const {reload,setReload} = useContext(reloadConext);
+  const navigate = useNavigate();
+  const handleLogout=()=>{
+    localStorage.removeItem("token");
+    setToken("");
+    setReload(!reload);
+    navigate("/");
+  }
   // alert("Token: " + token);
   return (
     <nav
-    transition={{ duration: 0.5 }} className="px-6 py-2 rounded-t-[20px] bg-[rgb(241,250,254)] shadow-2xl lg:px-16 lg:py-0">
+      transition={{ duration: 0.5 }}
+      className="px-6 py-2 rounded-t-[20px] bg-[rgb(241,250,254)] shadow-2xl lg:px-16 lg:py-0"
+    >
       <div className="grid place-items-center lg:hidden">
         <Link
           to={"/"}
@@ -65,6 +76,24 @@ const NavBar = () => {
               <li className="py-2 lg:py-0 ">
                 <Link
                   className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
+                  to={"/recentlyVisited"}
+                >
+                  Recently Visited
+                  
+                </Link>
+              </li>
+              <li className="py-2 lg:py-0 ">
+                <Link
+                  className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
+                  to={"/bookmarks"}
+                >
+                  Book Marks
+                  
+                </Link>
+              </li>
+              <li className="py-2 lg:py-0 ">
+                <Link
+                  className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
                   to={"/projects"}
                 >
                   Projects
@@ -72,33 +101,48 @@ const NavBar = () => {
               </li>
 
               <li className="py-2 lg:py-0 ">
-                <a
+                <Link
                   className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
-                  href="#"
+                  to={"/about"}
                 >
                   About
-                </a>
+                </Link>
               </li>
-              {token ?
+              {token ? (
                 <li className="py-2 lg:py-0 ">
-                  <Link to={"/addFile"}
+                  <Link
+                    to={"/addFile"}
                     className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
                     href="#"
                   >
                     File Upload
                   </Link>
-                </li> : ""
-              }
+                </li>
+              ) : (
+                ""
+              )}
             </div>
             <div className="">
-              {!token ? <li className="py-2 lg:py-0 ">
+              {!token ? (
+                <li className="py-2 lg:py-0 ">
+                  <Link
+                    className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
+                    to={"/signin"}
+                  >
+                    Login
+                  </Link>
+                </li>
+              ) : (
+                <li className="py-2 lg:py-0 ">
                 <Link
                   className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
-                  to={"/signin"}
+                  onClick={handleLogout}
+                  
                 >
-                  Login
+                  Log-Out
                 </Link>
-              </li> : ""}
+              </li>
+              )}
             </div>
           </ul>
         </nav>

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const UserBodyContainer = ({ children }) => {
   return (
     <div
-      class="w-full  bg-[#dff4ff] flex justify-center gap-10 px-5 py-5 items-center flex-wrap"
+      class="w-full  bg-[#dff4ff] flex justify-center gap-10 px-5 py-5 h-[auto] items-center flex-wrap"
     >
       {children}
     </div>

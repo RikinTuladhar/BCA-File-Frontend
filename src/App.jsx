@@ -9,6 +9,10 @@ import SignIn from "./pages/SignIn";
 import AddFile from "./pages/AddFile";
 import UserDetailsProvider from "./GlobalContext/UserDetailsProvider";
 import ReloadProvider from "./GlobalContext/ReloadProvider";
+import About from "./pages/About";
+import Projects from "./pages/Projects";
+import BookMarks from "./pages/BookMarks"
+import RecentlyVisited from "./pages/RecentlyVisited"
 function App() {
   const router = createBrowserRouter([
     {
@@ -21,10 +25,6 @@ function App() {
     },
     {
       path: "/*",
-      element: <NotFound />,
-    },
-    {
-      path: "/projects",
       element: <NotFound />,
     },
     {
@@ -43,6 +43,22 @@ function App() {
       path: "/addFile",
       element: <AddFile />,
     },
+    {
+      path: "/about",
+      element: <About />,
+    },
+    {
+      path: "/projects",
+      element: <Projects />,
+    },
+    {
+      path: "/bookmarks",
+      element: <BookMarks/>,
+    },
+    {
+      path: "/recentlyVisited",
+      element: <RecentlyVisited/>,
+    },
 
     {
       path: "/semester/:id",
@@ -58,9 +74,9 @@ function App() {
 
   return (
     <ReloadProvider>
-    <UserDetailsProvider>
-      <RouterProvider router={router}></RouterProvider>;
-    </UserDetailsProvider>
+      <UserDetailsProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </UserDetailsProvider>
     </ReloadProvider>
   );
 }
