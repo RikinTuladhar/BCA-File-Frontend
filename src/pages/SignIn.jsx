@@ -7,8 +7,8 @@ import { reloadConext } from "../GlobalContext/ReloadProvider";
 import "react-toastify/dist/ReactToastify.css";
 const SignIn = () => {
   const { SignInApi } = SignApi();
-  const {reload,setReload} = useContext(reloadConext);
-  const nav =   useNavigate();
+  const { reload, setReload } = useContext(reloadConext);
+  const navigate = useNavigate();
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -24,19 +24,19 @@ const SignIn = () => {
       toast.info("Please wait processing");
       SignInApi(data)
         .then((res) => {
-          setReload(true)
+          setReload(true);
           toast.success("Login Success");
-          setTimeout(()=>{
-           setReload(false)
-              nav("/");
-          },3000)
+          setTimeout(() => {
+            setReload(false);
+            navigate("/");
+          }, 3000);
           // alert(res)
           localStorage.setItem("token", res);
         })
         .catch((err) => {
-            toast.error("Username or password is invalid"+ err);
-         } )}
-         else {
+          toast.error("Username or password is invalid" + err);
+        });
+    } else {
       return toast.error("Please enter all fields");
     }
   };
@@ -135,7 +135,10 @@ const SignIn = () => {
               </Link>
             </p> */}
           </form>
-          <Link to={"/"} className="text-lg font-bold"> Go back</Link>
+          <Link to={"/"} className="text-lg font-bold">
+            {" "}
+            Go back
+          </Link>
         </div>
         <link
           rel="stylesheet"

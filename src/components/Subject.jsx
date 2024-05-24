@@ -6,10 +6,60 @@ import Table from "./Table";
 import FilesApi from "../Apis/FilesApi";
 import axios from "axios";
 const Subject = () => {
+  const [data, setData] = useState([]);
+  const [recentlyViewed, setRecentlyViewed] = useState({
+    id: "",
+    name: "",
+    filePath: "",
+  });
+
+  const [sessonStorageRecentlyViewed, setSessionStorageRecentlyViewed] =
+    useState(sessionStorage.getItem("recentlyViewed"));
+
+  // const recentVisited = (clickedId, clickedName, clickedFilePath) => {
+  //   console.log(clickedId);
+  //   setRecentlyViewed({
+  //     ...recentlyViewed,
+  //     id: clickedId,
+  //     name: clickedName,
+  //     filePath: clickedFilePath,
+  //   });
+  //   sessionStorage.setItem(
+  //     "recentlyViewed",
+  //     JSON.stringify([
+  //       { id: clickedId, name: clickedName, filePath: clickedFilePath },
+  //     ])
+  //   );
+  // };
+  const recentVisited = (clickedId, clickedName, clickedFilePath) => {
+    const newItem = {
+      id: clickedId,
+      name: clickedName,
+      filePath: clickedFilePath,
+    };
+  
+    // Get the existing items from sessionStorage
+    const existingItems = JSON.parse(sessionStorage.getItem("recentlyViewed")) || [];
+    console.log(existingItems)
+    // Add the new item to the existing items
+    const updatedItems = [...existingItems, newItem];
+    console.log(updatedItems)
+    // Update sessionStorage
+    sessionStorage.setItem("recentlyViewed", JSON.stringify(updatedItems));
+  };
+  
+
+  // If you want to log the updated state, you can use useEffect:
+  useEffect(() => {
+    console.log(recentlyViewed);
+    console.log(sessionStorage.getItem("recentlyViewed"));
+    console.log(sessonStorageRecentlyViewed);
+  }, [recentlyViewed]);
+
   const { id } = useParams();
   const { getFiles } = FilesApi();
   console.log(id);
-  const [data, setData] = useState([]);
+
   useEffect(() => {
     // axios.get(`https://bca-file-backend.onrender.com/file/subjectid/${id}`)
     getFiles(id)
@@ -22,7 +72,7 @@ const Subject = () => {
   console.log(id);
   return (
     <>
-      <Table data={data} />
+      <Table data={data} recentVisited={recentVisited} />
     </>
   );
 };

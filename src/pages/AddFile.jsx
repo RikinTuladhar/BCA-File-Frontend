@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
@@ -13,33 +13,36 @@ import { reloadConext } from "../GlobalContext/ReloadProvider";
 import { UserContext } from "../GlobalContext/UserDetailsProvider";
 import SubjectApi from "../Apis/SubjectApi";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AddFile = () => {
+  const fileInputRef = useRef(null);
+  const buttonRef = useRef();
   const { reload, setReload } = useContext(reloadConext);
   const { userDetails, token } = useContext(UserContext);
   const { getSubjectAll } = SubjectApi();
   const { id } = userDetails;
   const [imageUpload, setImageUpload] = useState(null);
+  const[buttonClick,setButtonClick] = useState(false)
   const [data, setData] = useState({
     name: "",
     filePath: "",
   });
-  console.log(userDetails);
+  // console.log(userDetails);
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`, // Set the token in the 'Authorization' header
     },
   };
-
   const [subjectId, setSubjectId] = useState("");
   const [subjects, setSubjects] = useState([]);
   const [subjectsFromApi, setSubjectsFromApi] = useState([]);
   const [selectedSem, setSelectedSem] = useState(1);
-  console.log(subjects);
-  console.log(subjectsFromApi);
-  console.log(selectedSem);
-  console.log(subjectId);
+  // console.log(subjects);
+  // console.log(subjectsFromApi);
+  // console.log(selectedSem);
+  // console.log(subjectId);
   //subjects fetched from api
   useEffect(() => {
     getSubjectAll()
@@ -54,7 +57,7 @@ const AddFile = () => {
       (item) => item.semesterId === parseInt(selectedSem)
     );
     setSubjects(filtered.length > 0 ? filtered : []);
-  }, [selectedSem, subjectsFromApi,reload]);
+  }, [selectedSem, subjectsFromApi, reload]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,41 +66,73 @@ const AddFile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setButtonClick(true)
+    const file = fileInputRef.current.files[0];
+
     if (imageUpload === null) return alert("Upload File Please ");
-    const imageRef = ref(storage, `BCAFiles/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        alert("Uploaded");
-        console.log(url);
-        return axios.post(
-          `https://bca-file-backend.onrender.com/file/${subjectId}/${userDetails?.id}`,
-          {...data,filePath:url},
-          config
-        );
-        // Do something with the URL (e.g., save it to the state)
-      }).then((res)=>{
-        setReload(!reload);
-        setImageUpload(null);
-        setData({
-          name: "",
-          filePath: "",
-        });
-        setSelectedSem(1);
-        setSubjectId("");
-        setSubjects([]);
-        setSubjectsFromApi([]);
+    console.log(file.type);
+    // xml != pdf -> true
+    // xml != docx -> true
+    // xml != pptx -> true
+
+    if (
+      file.type !== "application/pdf" ||
+      file.type !== "application/docx" ||
+      file.type !== "application/pptx"
+    ) {
+      //  return;
+      const imageRef = ref(storage, `BCAFiles/${imageUpload.name + v4()}`);
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            console.log(url);
+            return axios.post(
+              `https://bca-file-backend.onrender.com/file/${subjectId}/${userDetails?.id}`,
+              { ...data, filePath: url },
+              config
+            );
+            // Do something with the URL (e.g., save it to the state)
+          })
+          .then((res) => {
+            setButtonClick(false)
+            toast.success("Uploaded successfully");
+            setReload(!reload);
+            setImageUpload(null);
+            setData({
+              name: "",
+              filePath: "",
+            });
+            setSelectedSem(1);
+            setSubjectId("");
+            setSubjects([]);
+            setSubjectsFromApi([]);
+          });
       });
-    });
+    } else {
+      toast.error("Please upload a valid file. pdf or docx or pptx");
+    }
   };
 
   return (
     <Container className={"flex-col"}>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <NavBar />
       <h1 className="text-2xl font-bold">File Upload</h1>
       <hr />
       <form className="w-full md:w-[auto]" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
-          <InputField label={"File Name"} onChange={handleChange} name="name" />
+          <InputField label={"File Name"} value={data.name} onChange={handleChange} name="name" />
           <SelectComponent
             label={"Semester"}
             name={"semester"}
@@ -139,10 +174,12 @@ const AddFile = () => {
         <div className="w-[auto] md:w-full my-4">
           <input
             type="file"
+            ref={fileInputRef}
             onChange={(e) => setImageUpload(e.target.files[0])}
+            accept=".pdf,.docx,.pptx"
           />
         </div>
-        <Button type="submit" text="Submit" className="mb-3" />
+        <Button  disabled={ buttonClick? true :false }  type="submit" text="Submit" className="mb-3" />
       </form>
     </Container>
   );

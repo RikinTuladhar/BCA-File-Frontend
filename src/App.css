@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  behavior: smooth
 }
 
 @media screen and (max-width: 425px) {
@@ -11,6 +12,7 @@
         margin: 0 auto;
         padding: 1rem;
         text-align: center;
+        behavior: smooth
       }
       
     

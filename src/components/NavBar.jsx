@@ -82,7 +82,7 @@ const NavBar = () => {
                   
                 </Link>
               </li>
-              <li className="py-2 lg:py-0 ">
+              {token ? ( <li className="py-2 lg:py-0 ">
                 <Link
                   className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
                   to={"/bookmarks"}
@@ -90,7 +90,8 @@ const NavBar = () => {
                   Book Marks
                   
                 </Link>
-              </li>
+              </li>) : ("")}
+             
               <li className="py-2 lg:py-0 ">
                 <Link
                   className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
