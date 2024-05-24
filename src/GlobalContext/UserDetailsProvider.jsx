@@ -18,7 +18,7 @@ const UserDetailsProvider = ({ children }) => {
   useEffect(() => {
     getUserByToken(token)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         alert("Welcome to this website" + userDetails.username);
         setUserDetails(res);
       })

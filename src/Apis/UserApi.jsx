@@ -13,12 +13,12 @@ const UserApi = () => {
       };
     
     const endpoint = `${URL}/getUser/${token}`
-    console.log(endpoint)
+    // console.log(endpoint)
     try {
-      console.log(endpoint)
+      // console.log(endpoint)
       const response = await axios.get(endpoint,config)
       const data = await response.data
-      console.log(data)
+      // console.log(data)
       return data
     } catch (error) {
       throw new Error( "Error when fetching data" +error);

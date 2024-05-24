@@ -13,7 +13,7 @@ const RecentlyVisited = () => {
     }
   }, []);
 
-  console.log(recentlyViewed);
+  // console.log(recentlyViewed);
   return (
     <>
      <NavBar/>

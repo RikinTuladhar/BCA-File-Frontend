@@ -30,7 +30,7 @@ const SignUp = () => {
         console.log(err);
       });
   };
-  console.log(data);
+  // console.log(data);
   return (
     <Container>
       <div class="flex min-h-screen items-center justify-center">

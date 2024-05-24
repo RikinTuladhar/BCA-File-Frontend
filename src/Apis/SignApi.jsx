@@ -8,11 +8,11 @@ const SignApi = () => {
   async function SignInApi(value) {
     try {
       const URL = `${base}/login`;
-      console.log(URL);
+      // console.log(URL);
       const response = await axios.post(URL, value);
-      console.log(response);
+      // console.log(response);
       const data = await response.data.token;
-      console.log(data);
+      // console.log(data);
       setToken(data);
       return data;
     } catch (error) {

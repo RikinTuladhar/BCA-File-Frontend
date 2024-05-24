@@ -104,7 +104,7 @@ const Semester = () => {
   useEffect(() => {
     getSemester(id).then((res) => {
       // alert(res)
-      console.log(res);
+      // console.log(res);
       setDatas(res);
     }).catch((err)=>{
       console.log("error"+ err);

@@ -85,7 +85,7 @@ const AddFile = () => {
       uploadBytes(imageRef, imageUpload).then((snapshot) => {
         getDownloadURL(snapshot.ref)
           .then((url) => {
-            console.log(url);
+            // console.log(url);
             return axios.post(
               `https://bca-file-backend.onrender.com/file/${subjectId}/${userDetails?.id}`,
               { ...data, filePath: url },

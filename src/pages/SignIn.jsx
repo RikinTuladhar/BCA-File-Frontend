@@ -40,7 +40,7 @@ const SignIn = () => {
       return toast.error("Please enter all fields");
     }
   };
-  console.log(data);
+  // console.log(data);
   return (
     <Container>
       <ToastContainer

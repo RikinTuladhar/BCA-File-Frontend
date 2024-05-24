@@ -7,11 +7,11 @@ const FilesApi = () => {
         //   /file/subjectid/1
         // https://bca-file-backend.onrender.com/file/subjectid/1
         const Endpoint = `${URL}/file/subjectid/${id}` 
-        console.log(Endpoint)
+        // console.log(Endpoint)
        try {
         const response  = await axios.get(Endpoint);
         const data = await response.data;
-        console.log(data);
+        // console.log(data);
         return data;
 
        } catch (error) {
@@ -24,7 +24,7 @@ const FilesApi = () => {
     try {
       const response = await axios.post(endpoint, value,config);
       const data = await response.data;
-      console.log(data);
+      // console.log(data);
       return data;
       
     } catch (error) {

@@ -40,25 +40,18 @@ const Subject = () => {
   
     // Get the existing items from sessionStorage
     const existingItems = JSON.parse(sessionStorage.getItem("recentlyViewed")) || [];
-    console.log(existingItems)
+    // console.log(existingItems)
     // Add the new item to the existing items
     const updatedItems = [...existingItems, newItem];
-    console.log(updatedItems)
+    // console.log(updatedItems)
     // Update sessionStorage
     sessionStorage.setItem("recentlyViewed", JSON.stringify(updatedItems));
   };
   
 
-  // If you want to log the updated state, you can use useEffect:
-  useEffect(() => {
-    console.log(recentlyViewed);
-    console.log(sessionStorage.getItem("recentlyViewed"));
-    console.log(sessonStorageRecentlyViewed);
-  }, [recentlyViewed]);
-
   const { id } = useParams();
   const { getFiles } = FilesApi();
-  console.log(id);
+  // console.log(id);
 
   useEffect(() => {
     // axios.get(`https://bca-file-backend.onrender.com/file/subjectid/${id}`)
@@ -69,7 +62,7 @@ const Subject = () => {
       })
       .catch((err) => console.error(err));
   }, [id]);
-  console.log(id);
+  // console.log(id);
   return (
     <>
       <Table data={data} recentVisited={recentVisited} />

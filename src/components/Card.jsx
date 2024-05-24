@@ -12,8 +12,8 @@ const Card = ({ name }) => {
     }, 5000);
   };
   useEffect(() => {
-    console.log(dataFromApiTrue());
-    console.log(noValue);
+    // console.log(dataFromApiTrue());
+    // console.log(noValue);
   }, [name]);
 
   if (name === undefined && name === null) {
