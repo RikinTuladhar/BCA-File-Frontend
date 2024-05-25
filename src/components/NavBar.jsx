@@ -10,6 +10,7 @@ const NavBar = () => {
   const {reload,setReload} = useContext(reloadConext);
   const {userDetails} = useContext(UserContext);
   const {role} = userDetails;
+  console.log(role)
   const navigate = useNavigate();
   const handleLogout=()=>{
     localStorage.removeItem("token");

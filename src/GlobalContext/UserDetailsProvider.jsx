@@ -21,11 +21,12 @@ const UserDetailsProvider = ({ children }) => {
       .then((res) => {
         // console.log(res);
         setUserDetails(res);
+        console.log(res)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [token]);
+  }, [token,reload]);
   return (
     <UserContext.Provider value={{ userDetails, token, setToken }}>
       {children}
