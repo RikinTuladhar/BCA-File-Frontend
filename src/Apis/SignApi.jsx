@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../GlobalContext/UserDetailsProvider";
 const SignApi = () => {
+
   const { setToken } = useContext(UserContext);
   const base = "https://bca-file-backend.onrender.com";
 
@@ -21,7 +22,23 @@ const SignApi = () => {
     }
   }
 
-  async function signUpAPI() {}
+  async function signUpAPI(value) {
+    // https://bca-file-backend.onrender.com/register
+    const endpoint = `${base}/register`
+    try {
+      const response = await axios.post(endpoint,value)
+      let data = response?.data?.token;
+      if(data.length > 0){
+        return "Account successfully registered";
+      }
+      else{
+        return "Something went wrong";
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+
+  }
 
   return { signUpAPI, SignInApi };
 };

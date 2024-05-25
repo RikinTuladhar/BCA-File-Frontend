@@ -5,10 +5,12 @@ import SignApi from "../Apis/SignApi";
 import { ToastContainer, toast } from "react-toastify";
 import { reloadConext } from "../GlobalContext/ReloadProvider";
 import "react-toastify/dist/ReactToastify.css";
+import {Button} from "../Imports/ImportAll";
 const SignIn = () => {
   const { SignInApi } = SignApi();
   const { reload, setReload } = useContext(reloadConext);
   const navigate = useNavigate();
+  
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -34,7 +36,7 @@ const SignIn = () => {
           localStorage.setItem("token", res);
         })
         .catch((err) => {
-          toast.error("Username or password is invalid" + err);
+          toast.error("Username or password is invalid");
         });
     } else {
       return toast.error("Please enter all fields");
@@ -61,11 +63,11 @@ const SignIn = () => {
             Sign In
           </h4>
           <p class="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-            Enter your details to register.
+            Enter your details to Sign In.
           </p>
           <form
             onSubmit={handleSubmit}
-            class="mt-8 mb-2  w-80 max-w-screen-lg sm:w-96"
+            class="mt-8 mb-2   max-w-screen-lg sm:w-96"
           >
             <div class="mb-4 px-5 flex flex-col gap-6">
               <div class="relative h-11 w-full min-w-[200px]">
@@ -92,48 +94,24 @@ const SignIn = () => {
                 </label>
               </div>
             </div>
-            <div class="inline-flex items-center">
-              <label
-                class="relative -ml-2.5 flex cursor-pointer items-center rounded-full p-3"
-                for="checkbox"
-                data-ripple-dark="true"
-              >
-                <span class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-3.5 w-3.5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-width="1"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </span>
-              </label>
+            <div className="grid h-[10vh] w-full mb-3 place-items-center">
+            <button
+              class="block  select-none rounded-lg bg-blue-600 py-3 px-10 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#2696a6] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              type="submit"
+              data-ripple-light="true"
+            >
+              Log In
+            </button>
             </div>
-            <div className="grid w-full mb-3 place-items-center">
-              <button
-                class=" md:block select-none rounded-lg bg-blue-600 md:py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#2696a6] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                type="submit"
-                data-ripple-light="true"
-              >
-                Log In
-              </button>
-            </div>
-            {/* <p class="mt-4 block text-center font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-              Already have an account?
+            <p class="mt-4 block text-center font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
+            Do not have an account?
               <Link
                 class="font-semibold text-[#2696a6] transition-colors hover:text-blue-700"
                 to={"/signup"}
               >
                 Sign Up
               </Link>
-            </p> */}
+            </p>
           </form>
           <Link to={"/"} className="text-lg font-bold">
             {" "}
