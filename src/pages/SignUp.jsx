@@ -24,7 +24,7 @@ const SignUp = () => {
   };
 
 
-  console.log(data)
+  // console.log(data)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +46,17 @@ const SignUp = () => {
         },3000)
       })
       .catch((err) => {
-        console.log(err);
+        const status = err?.response?.status || err?.status;
+        if (status === 401) {
+          setButtonClicked(false);
+          toast.error("Username already taken");
+          console.log(err);
+        } else {
+          setButtonClicked(false);
+          const errorMessage = err?.response?.data?.message || err.message || "User name Already taken";
+          toast.error(errorMessage);
+          console.log(err);
+        }
       });
   };
   // console.log(data);

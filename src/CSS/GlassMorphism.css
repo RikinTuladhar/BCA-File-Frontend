@@ -1,0 +1,5 @@
+.glassmorpf {
+  backdrop-filter: blur(18.5px);
+  -webkit-backdrop-filter: blur(18.5px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}

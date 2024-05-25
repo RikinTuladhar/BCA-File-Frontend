@@ -35,7 +35,7 @@ const SignApi = () => {
         return "Something went wrong";
       }
     } catch (error) {
-      throw new Error(error.message);
+      throw  Promise.reject(error);
     }
 
   }

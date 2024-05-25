@@ -120,14 +120,14 @@ const Semester = () => {
       <UserBodyContainer>
         {/* <BreadScrum /> */}
         {!isSubjectRoute && (
-          <div className={`w-ful mt-10 min-h-[50vh] grid ${ datas.length > 0 ? " md:grid-cols-4 gap-5 " : "place-content-center"  }  items-center`}>
+          <div className={`w-ful mt-10 min-h-[50vh] grid ${ datas?.length > 0 ? " md:grid-cols-4 gap-5 " : "place-content-center"  }  items-center`}>
             {/* {data?.map((card, id) => (
               <Link to={`subject/${id}`} key={id}>
                 <Card name={card} />
               </Link>
             ))} */}
             {datas.length > 0  ? (datas?.map((data,i)=>(
-                <Link to={`subject/${data.id}`} key={i}>
+                <Link to={`subject/${data?.id}`} key={i}>
                   <Card name={data?.name} />
                 </Link>
               ))) : (

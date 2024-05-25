@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { reloadConext } from "../GlobalContext/ReloadProvider";
+import "../CSS/GlassMorphism.css"
 const NavBar = () => {
   const [click, setClick] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -17,7 +18,7 @@ const NavBar = () => {
   return (
     <nav
       transition={{ duration: 0.5 }}
-      className="px-6 py-2 rounded-t-[20px] bg-[rgb(241,250,254)] shadow-2xl lg:px-16 lg:py-0"
+      className="glassmorpf bg-gradient-to-br from-[#d6e7ef] to-[#e1ecf8] px-6 py-2 rounded-t-[20px] bg-[rgb(241,250,254)] shadow-2xl lg:px-16 lg:py-0"
     >
       <div className="grid place-items-center lg:hidden">
         <Link

@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import "../CSS/GlassMorphism.css"
 const UserBodyContainer = ({ children }) => {
   return (
     <div
-      class="w-full  bg-[#dff4ff] flex justify-center gap-10 px-5 py-5 h-[auto] items-center flex-wrap"
+      class="glassmorpf bg-gradient-to-b from-[#deecfb] to-[#c4dff9]  flex justify-center px-5 py-10 gap-10 md:px-5 md:py-5 h-[auto] items-center flex-wrap"
     >
       {children}
     </div>
