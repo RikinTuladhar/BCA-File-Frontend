@@ -3,10 +3,13 @@ import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { reloadConext } from "../GlobalContext/ReloadProvider";
 import "../CSS/GlassMorphism.css"
+import { UserContext } from "../GlobalContext/UserDetailsProvider";
 const NavBar = () => {
   const [click, setClick] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const {reload,setReload} = useContext(reloadConext);
+  const {userDetails} = useContext(UserContext);
+  const {role} = userDetails;
   const navigate = useNavigate();
   const handleLogout=()=>{
     localStorage.removeItem("token");
@@ -110,7 +113,7 @@ const NavBar = () => {
                   About
                 </Link>
               </li>
-              {token ? (
+              {role == "ADMIN" ? (
                 <li className="py-2 lg:py-0 ">
                   <Link
                     to={"/addFile"}

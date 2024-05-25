@@ -14,6 +14,7 @@ const UserDetailsProvider = ({ children }) => {
     firstName: "",
     lastname: "",
     username: "",
+    role:""
   });
   useEffect(() => {
     getUserByToken(token)
