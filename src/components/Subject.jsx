@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SubjectCard from "./SubjectCard";
 // import BreadScrum from "./BreadScrum";
 import { useParams } from "react-router-dom";
 import Table from "./Table";
 import FilesApi from "../Apis/FilesApi";
 import axios from "axios";
+import { UserContext } from "../GlobalContext/UserDetailsProvider";
+import { reloadConext } from "../GlobalContext/ReloadProvider";
+import BookMarkApi from "../Apis/BookMarkApi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Subject = () => {
   const [data, setData] = useState([]);
   const [recentlyViewed, setRecentlyViewed] = useState({
@@ -12,6 +17,11 @@ const Subject = () => {
     name: "",
     filePath: "",
   });
+
+  const { postBookmarks } = BookMarkApi();
+
+  const { userDetails } = useContext(UserContext);
+  const { reload, setReload } = useContext(reloadConext);
 
   const [sessonStorageRecentlyViewed, setSessionStorageRecentlyViewed] =
     useState(sessionStorage.getItem("recentlyViewed"));
@@ -37,9 +47,10 @@ const Subject = () => {
       name: clickedName,
       filePath: clickedFilePath,
     };
-  
+
     // Get the existing items from sessionStorage
-    const existingItems = JSON.parse(sessionStorage.getItem("recentlyViewed")) || [];
+    const existingItems =
+      JSON.parse(sessionStorage.getItem("recentlyViewed")) || [];
     // console.log(existingItems)
     // Add the new item to the existing items
     const updatedItems = [...existingItems, newItem];
@@ -47,11 +58,29 @@ const Subject = () => {
     // Update sessionStorage
     sessionStorage.setItem("recentlyViewed", JSON.stringify(updatedItems));
   };
-  
 
   const { id } = useParams();
   const { getFiles } = FilesApi();
   // console.log(id);
+
+  /**
+   * The `bookMarkHandle` function takes a `fileId` parameter, extracts the user id from `userDetails`,
+   * posts the bookmark with the fileId and user id, and then alerts the response.
+   */
+  const bookMarkHanlde = (fileId) => {
+    setReload(true);
+    console.log(fileId);
+    let { id } = userDetails; //user id extracted inside as there is already id taking from param
+    console.log(id);
+    postBookmarks(fileId, id)
+      .then((res) => {
+        // alert(res);
+        toast.success(res)
+        console.log(res);
+        setReload(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     // axios.get(`https://bca-file-backend.onrender.com/file/subjectid/${id}`)
@@ -61,11 +90,27 @@ const Subject = () => {
         console.log(res);
       })
       .catch((err) => console.error(err));
-  }, [id]);
+  }, [id, reload]);
   // console.log(id);
   return (
     <>
-      <Table data={data} recentVisited={recentVisited} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <Table
+        data={data}
+        recentVisited={recentVisited}
+        bookMarkHanlde={bookMarkHanlde}
+      />
     </>
   );
 };

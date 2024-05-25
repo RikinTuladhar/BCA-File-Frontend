@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = ({data,recentVisited}) => {
+const Table = ({data,recentVisited,bookMarkHanlde}) => {
   // console.log(data)
   return (
     
@@ -19,8 +19,8 @@ const Table = ({data,recentVisited}) => {
               <tr key={i}>
                 <td>{i+1}</td>
                 <td>{data?.name}</td>
-                <td><a onClick={e=> recentVisited(data.id,data.name,data.filePath)} href={`${data?.filePath}`} target="_blank" rel="noopener noreferrer"  >View</a></td>
-                <td>Book Mark</td>
+                <td><a onClick={e=> recentVisited(data?.id,data?.name,data?.filePath)} href={`${data?.filePath}`} target="_blank" rel="noopener noreferrer"  >View</a></td>
+                <td className="cursor-pointer" onClick={e=> bookMarkHanlde(data?.id)} >Book Mark</td>
               </tr>
            ) : (
             <tr>
