@@ -21,7 +21,7 @@ const UserDetailsProvider = ({ children }) => {
       .then((res) => {
         // console.log(res);
         setUserDetails(res);
-        console.log(res)
+        // console.log(res)
       })
       .catch((err) => {
         console.log(err);
