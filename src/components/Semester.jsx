@@ -126,7 +126,7 @@ const Semester = () => {
                 <Card name={card} />
               </Link>
             ))} */}
-            {datas.length > 0  ? (datas?.map((data,i)=>(
+            {datas?.length > 0  ? (datas?.map((data,i)=>(
                 <Link to={`subject/${data?.id}`} key={i}>
                   <Card name={data?.name} />
                 </Link>

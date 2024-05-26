@@ -53,10 +53,10 @@ const AddFile = () => {
   }, [reload]);
 
   useEffect(() => {
-    const filtered = subjectsFromApi.filter(
+    const filtered = subjectsFromApi?.filter(
       (item) => item.semesterId === parseInt(selectedSem)
     );
-    setSubjects(filtered.length > 0 ? filtered : []);
+    setSubjects(filtered?.length > 0 ? filtered : []);
   }, [selectedSem, subjectsFromApi, reload]);
 
   const handleChange = (e) => {

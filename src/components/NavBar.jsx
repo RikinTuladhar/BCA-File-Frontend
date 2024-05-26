@@ -2,22 +2,22 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { reloadConext } from "../GlobalContext/ReloadProvider";
-import "../CSS/GlassMorphism.css"
+import "../CSS/GlassMorphism.css";
 import { UserContext } from "../GlobalContext/UserDetailsProvider";
 const NavBar = () => {
   const [click, setClick] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const {reload,setReload} = useContext(reloadConext);
-  const {userDetails} = useContext(UserContext);
-  const {role} = userDetails;
-  console.log(role)
+  const { reload, setReload } = useContext(reloadConext);
+  const { userDetails } = useContext(UserContext);
+  const { role } = userDetails;
+  console.log(role);
   const navigate = useNavigate();
-  const handleLogout=()=>{
+  const handleLogout = () => {
     localStorage.removeItem("token");
     setToken("");
     setReload(!reload);
     navigate("/");
-  }
+  };
   // alert("Token: " + token);
   return (
     <nav
@@ -84,19 +84,21 @@ const NavBar = () => {
                   to={"/recentlyVisited"}
                 >
                   Recently Visited
-                  
                 </Link>
               </li>
-              {token ? ( <li className="py-2 lg:py-0 ">
-                <Link
-                  className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
-                  to={"/bookmarks"}
-                >
-                  Book Marks
-                  
-                </Link>
-              </li>) : ("")}
-             
+              {token ? (
+                <li className="py-2 lg:py-0 ">
+                  <Link
+                    className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
+                    to={"/bookmarks"}
+                  >
+                    Book Marks
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
+
               <li className="py-2 lg:py-0 ">
                 <Link
                   className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
@@ -105,15 +107,17 @@ const NavBar = () => {
                   Projects
                 </Link>
               </li>
+              {!token && (
+                <li className="py-2 lg:py-0 ">
+                  <Link
+                    className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
+                    to={"/about"}
+                  >
+                    About
+                  </Link>
+                </li>
+              )}
 
-              <li className="py-2 lg:py-0 ">
-                <Link
-                  className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
-                  to={"/about"}
-                >
-                  About
-                </Link>
-              </li>
               {role == "ADMIN" ? (
                 <li className="py-2 lg:py-0 ">
                   <Link
@@ -140,14 +144,13 @@ const NavBar = () => {
                 </li>
               ) : (
                 <li className="py-2 lg:py-0 ">
-                <Link
-                  className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
-                  onClick={handleLogout}
-                  
-                >
-                  Log-Out
-                </Link>
-              </li>
+                  <Link
+                    className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
+                    onClick={handleLogout}
+                  >
+                    Log-Out
+                  </Link>
+                </li>
               )}
             </div>
           </ul>

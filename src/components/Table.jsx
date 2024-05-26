@@ -13,6 +13,7 @@ const Table = ({ data, recentVisited, bookMarkHanlde }) => {
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
+            <th scope="col">Subject</th>
             <th scope="col">View</th>
             <th scope="col">BookMark</th>
           </tr>
@@ -23,10 +24,11 @@ const Table = ({ data, recentVisited, bookMarkHanlde }) => {
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{data?.name}</td>
+                <td>{data?.subjectName}</td>
                 <td>
                   <a
                     onClick={(e) =>
-                      recentVisited(data?.id, data?.name, data?.filePath)
+                      recentVisited(data?.id, data?.name, data?.filePath, data?.subjectName)
                     }
                     href={`${data?.filePath}`}
                     target="_blank"
@@ -57,7 +59,7 @@ const Table = ({ data, recentVisited, bookMarkHanlde }) => {
           ) : (
             <tr>
               <td
-                colSpan="4"
+                colSpan="5"
                 className="text-lg text-center text-red-700 md:text-2xl"
               >
                 No Data Found

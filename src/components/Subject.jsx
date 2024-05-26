@@ -41,11 +41,12 @@ const Subject = () => {
   //     ])
   //   );
   // };
-  const recentVisited = (clickedId, clickedName, clickedFilePath) => {
+  const recentVisited = (clickedId, clickedName, clickedFilePath,clickedsubjectName) => {
     const newItem = {
       id: clickedId,
       name: clickedName,
       filePath: clickedFilePath,
+      subjectName:clickedsubjectName
     };
 
     // Get the existing items from sessionStorage
@@ -87,7 +88,7 @@ const Subject = () => {
     getFiles(id)
       .then((res) => {
         setData(res);
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => console.error(err));
   }, [id, reload]);
