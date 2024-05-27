@@ -83,7 +83,7 @@ const NavBar = () => {
                   className="text-[#0c546d] text-xl font-semibold hover:pb-4 hover:border-b-4 hover:border-yellow-400"
                   to={"/recentlyVisited"}
                 >
-                  Recently Visited
+                  Recently viewed
                 </Link>
               </li>
               {token ? (

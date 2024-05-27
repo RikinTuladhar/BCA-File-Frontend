@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { UserContext } from "../GlobalContext/UserDetailsProvider";
 import { useNavigate } from "react-router-dom";
-
+import { FaEye } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
 const Table = ({ data, recentVisited, bookMarkHanlde }) => {
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
@@ -33,23 +34,24 @@ const Table = ({ data, recentVisited, bookMarkHanlde }) => {
                     href={`${data?.filePath}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="flex items-center justify-center"
                   >
-                    View
+                   <FaEye style={{width:"30px",height:"20px"}} />
                   </a>
                 </td>
                 {token != null ? (
                   <td
-                    className="cursor-pointer"
+                    className="flex items-center justify-center py-2 cursor-pointer"
                     onClick={(e) => bookMarkHanlde(data?.id)}
                   >
-                    Book Mark
+                  <FaBookmark style={{width:"14px",height:"25px"}} />
                   </td>
                 ):(
                   <td
-                  className="cursor-pointer"
+                  className="flex items-center justify-center cursor-pointer"
                   onClick={(e) => navigate("/signin")}
                 >
-                  Book Mark
+                <FaBookmark style={{width:"14px",height:"25px"}} />
                 </td>
                 )}
 
