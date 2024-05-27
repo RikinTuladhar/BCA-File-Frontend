@@ -20,7 +20,9 @@ const Home = () => {
     <div className="relative px-2 py-2 md:px-5 md:py-5 min-h-[100vh]">
       <NavBar />
 
-      {!apiLoaded && (
+      {
+      //logic to show the starting timer of response from server
+      !apiLoaded && (
         <div className="grid w-full text-xl text-black font-semibold   bg-gradient-to-r from-[#9CAFB7] to-[#5c5d5e]   md:font-bold md:text-2xl place-items-center">
           Waiting for server to response please wait, maximum time for {formattedTime} !!!
         </div>

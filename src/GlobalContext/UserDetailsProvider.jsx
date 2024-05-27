@@ -7,8 +7,10 @@ export const UserContext = createContext();
 
 const UserDetailsProvider = ({ children }) => {
   const { reload, setReload } = useContext(reloadConext);
+  //handling time required from server response
   const [formattedTime, setFormattedTime] = useState("");
-  const [time, setTime] = useState(120);
+  const [time, setTime] = useState(130);
+
   useEffect(() => {
     if (time > 0) {
       const timerId = setInterval(() => {
@@ -19,6 +21,8 @@ const UserDetailsProvider = ({ children }) => {
       return () => clearInterval(timerId);
     }
   }, [time]);
+
+
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -45,12 +49,12 @@ const UserDetailsProvider = ({ children }) => {
   //for timer checking if api was hit or not?
   const [apiLoaded, setApiLoaded] = useState(false);
   useEffect(() => {
-    formatTime(time);
+    formatTime(time); //starting timer
     getUserByToken(token)
       .then((res) => {
         // console.log(res);
-        if(!apiLoaded){
-          setApiLoaded(true)
+        if(!apiLoaded){  //from flase -> true
+          setApiLoaded(true) //api hit true
         }
         setUserDetails(res);
         // console.log(res)
