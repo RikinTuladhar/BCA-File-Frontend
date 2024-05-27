@@ -1,16 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "../Imports/ImportAll";
 import SignApi from "../Apis/SignApi";
 import { ToastContainer, toast } from "react-toastify";
 import { reloadConext } from "../GlobalContext/ReloadProvider";
 import "react-toastify/dist/ReactToastify.css";
-import {Button} from "../Imports/ImportAll";
+import { Button } from "../Imports/ImportAll";
+import Loader from "../components/Loader";
 const SignIn = () => {
   const { SignInApi } = SignApi();
   const { reload, setReload } = useContext(reloadConext);
   const navigate = useNavigate();
-  
+  const [clicked, setClicked] = useState(false);
+  // console.log(clicked)
+  const buttonRef = useRef();
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -21,6 +24,7 @@ const SignIn = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    setClicked(true);
     const { username, password } = data;
     if (username && password) {
       toast.info("Please wait processing");
@@ -30,6 +34,7 @@ const SignIn = () => {
           toast.success("Login Success");
           setTimeout(() => {
             setReload(false);
+            setClicked(false);
             navigate("/");
           }, 3000);
           // alert(res)
@@ -37,8 +42,10 @@ const SignIn = () => {
         })
         .catch((err) => {
           toast.error("Username or password is invalid");
+          setClicked(false);
         });
     } else {
+      setClicked(false);
       return toast.error("Please enter all fields");
     }
   };
@@ -95,16 +102,19 @@ const SignIn = () => {
               </div>
             </div>
             <div className="grid h-[10vh] w-full mb-3 place-items-center">
-            <button
-              class="block  select-none rounded-lg bg-blue-600 py-3 px-10 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#2696a6] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              type="submit"
-              data-ripple-light="true"
-            >
-              Log In
-            </button>
+              <button
+                className="flex justify-evenly gap-2 items-center  select-none rounded-lg bg-blue-600 py-2 px-3 text-center align-middle font-sans font-bold uppercase text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#2696a6] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="submit"
+                data-ripple-light="true"
+                ref={buttonRef}
+                disabled={clicked}
+              >
+                {clicked && <Loader />}
+                <span className="text-lg">Log In</span>
+              </button>
             </div>
             <p class="mt-4 block text-center font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-            Do not have an account?
+              Do not have an account?
               <Link
                 class="font-semibold text-[#2696a6] transition-colors hover:text-blue-700"
                 to={"/signup"}

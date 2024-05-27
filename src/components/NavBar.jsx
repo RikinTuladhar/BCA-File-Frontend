@@ -118,7 +118,7 @@ const NavBar = () => {
                 </li>
               )}
 
-              {role == "ADMIN" ? (
+              {role == "ADMIN" && token  ? (
                 <li className="py-2 lg:py-0 ">
                   <Link
                     to={"/addFile"}

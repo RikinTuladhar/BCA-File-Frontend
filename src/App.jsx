@@ -11,8 +11,8 @@ import UserDetailsProvider from "./GlobalContext/UserDetailsProvider";
 import ReloadProvider from "./GlobalContext/ReloadProvider";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
-import BookMarks from "./pages/BookMarks"
-import RecentlyVisited from "./pages/RecentlyVisited"
+import BookMarks from "./pages/BookMarks";
+import RecentlyVisited from "./pages/RecentlyVisited";
 function App() {
   const router = createBrowserRouter([
     {
@@ -53,11 +53,11 @@ function App() {
     },
     {
       path: "/bookmarks",
-      element: <BookMarks/>,
+      element: <BookMarks />,
     },
     {
       path: "/recentlyVisited",
-      element: <RecentlyVisited/>,
+      element: <RecentlyVisited />,
     },
 
     {
@@ -74,9 +74,10 @@ function App() {
 
   return (
     <ReloadProvider>
-      <UserDetailsProvider>
-        <RouterProvider router={router}></RouterProvider>
-      </UserDetailsProvider>
+   
+        <UserDetailsProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </UserDetailsProvider>
     </ReloadProvider>
   );
 }

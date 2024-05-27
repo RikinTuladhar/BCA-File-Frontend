@@ -4,6 +4,7 @@ import { Container } from "../Imports/ImportAll";
 import SignApi from "../Apis/SignApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../components/Loader";
 const SignUp = () => {
   const { signUpAPI } = SignApi();
   const [buttonClicked, setButtonClicked] = useState(false)
@@ -29,7 +30,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonClicked(true)
-    alert("Clicked ");
+    // alert("Clicked ");
     signUpAPI(data)
       .then((res) => {
         // alert(res);
@@ -143,11 +144,12 @@ const SignUp = () => {
             <div className="grid h-[10vh] w-full mb-3 place-items-center">
 
               <button
-                class="block  select-none rounded-lg bg-blue-600 py-3 px-10 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#2696a6] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                className="flex justify-evenly gap-2 items-center  select-none rounded-lg bg-blue-600 py-2 px-3 text-center align-middle font-sans font-bold uppercase text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#2696a6] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="submit"
                 data-ripple-light="true"
                 disabled={buttonClicked}
               >
+               { buttonClicked && <Loader/>}
                 Register
               </button>
             </div>

@@ -1,11 +1,11 @@
 import Card from "../components/Card";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-// import BreadScrum from "../components/BreadScrum";
-import Semester from "../components/Semester";
 import NavBar from "../components/NavBar";
 import { UserBodyContainer } from "../Imports/ImportAll";
+import { UserContext } from "../GlobalContext/UserDetailsProvider";
 const Home = () => {
+  const { apiLoaded, formattedTime } = useContext(UserContext);
   const [data, setData] = useState([
     { id: 1, name: "Semester 1" },
     { id: 2, name: "Semester 2" },
@@ -17,11 +17,16 @@ const Home = () => {
     { id: 8, name: "Semester 8" },
   ]);
   return (
-    <div className="px-2 py-2 md:px-5 md:py-5 min-h-[100vh]">
+    <div className="relative px-2 py-2 md:px-5 md:py-5 min-h-[100vh]">
       <NavBar />
 
+      {!apiLoaded && (
+        <div className="grid w-full text-xl text-black font-semibold   bg-gradient-to-r from-[#9CAFB7] to-[#5c5d5e]   md:font-bold md:text-2xl place-items-center">
+          Waiting for server to response please wait, maximum time for {formattedTime} !!!
+        </div>
+      )}
       <UserBodyContainer>
-        {data.map((card, id) => (
+        {data?.map((card, id) => (
           <Link key={id} to={`/semester/${card.id}`}>
             <Card name={card.name} />
           </Link>
