@@ -66,6 +66,7 @@ function App() {
         {
           path: "/admin/allFiles",
           element: <AllFiles />,
+          index:true
         },
 
         {

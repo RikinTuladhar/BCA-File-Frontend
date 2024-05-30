@@ -38,7 +38,7 @@ const NavBar = () => {
       </div>
       <label
         onClick={(e) => setClick(!click)}
-        for="menu-toggle"
+        htmlFor="menu-toggle"
         className="block cursor-pointer lg:hidden"
       >
         <svg

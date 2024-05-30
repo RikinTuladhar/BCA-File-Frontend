@@ -44,7 +44,7 @@ const SignIn = () => {
             setTimeout(() => {
               setReload(false);
               setClicked(false);
-              navigate("/admin");
+              navigate("/admin/allFiles");
             }, 3000);
           }
         })

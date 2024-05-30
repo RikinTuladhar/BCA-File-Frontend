@@ -1,11 +1,31 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import FilesApi from "../Apis/FilesApi";
 const AllFiles = () => {
+  const { getAllFiles } = FilesApi();
+  const [files, setFiles] = useState([
+    {
+      id: "",
+      name: "",
+      filePath: "",
+      subjectName: "",
+    },
+  ]);
+
+  const handleDelete=(e)=>{
+
+  }
+
+  useEffect(() => {
+    getAllFiles().then((res) => {
+      console.log(res);
+      setFiles(res);
+    });
+  }, []);
   return (
     <>
       <div class="relative overflow-x-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead class="text-lg text-black  bg-gray-50 dark:bg-gray-700 dark:text-gray-300 ">
             <tr>
               <th scope="col" class="px-6 py-3">
                 #
@@ -14,7 +34,7 @@ const AllFiles = () => {
                 File Name
               </th>
               <th scope="col" class="px-6 py-3">
-                Semester
+                Subject
               </th>
 
               <th scope="col" class="px-6 py-3">
@@ -26,13 +46,18 @@ const AllFiles = () => {
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th class="px-6 py-4"> 1</th>
-              <td class="px-6 py-4">Silver</td>
-              <td class="px-6 py-4">Laptop</td>
-              <td class="px-6 py-4">$2999</td>
-              <td class="px-6 py-4">$2999</td>
-            </tr>
+            {files?.map((file, index) => (
+              <tr class=" border-b dark:bg-gray-800 ">
+                <th class="px-6 py-4"> {index}</th>
+                <th class="px-6 py-4"> {file.name}</th>
+                <th class="px-6 py-4"> {file.subjectName}</th>
+                <th class="px-6 py-4">
+                  {" "}
+                  <a target="_blank" href={`${file.filePath}`}>View</a>
+                </th>
+                <th class="px-6 py-4 cursor-pointer " onClick={handleDelete}> Delete</th>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
