@@ -15,12 +15,12 @@ const RecentlyVisited = () => {
   const { id } = userDetails;
   const bookMarkHanlde = (fileId) => {
     setReload(true);
-    console.log(fileId);
+    // console.log(fileId);
     postBookmarks(fileId, id)
       .then((res) => {
         // alert(res)
         toast.success(res);
-        console.log(res);
+        // console.log(res);
         setReload(false);
       })
       .catch((err) => console.log(err));

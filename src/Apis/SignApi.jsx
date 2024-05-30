@@ -10,9 +10,9 @@ const SignApi = () => {
       const URL = `${base}/login`;
       // console.log(URL);
       const response = await axios.post(URL, value);
-      console.log(response);
+      // console.log(response);
       const data = await response.data.token;
-      console.log(data);
+      // console.log(data);
       setToken(data);
       localStorage.setItem("token", data);
       setIsLogIn(true)
@@ -22,7 +22,7 @@ const SignApi = () => {
         },
       });
       const redirectResponse = await redirect.data;
-      console.log(redirectResponse);
+      // console.log(redirectResponse);
       return redirectResponse;
     } catch (error) {
       // Throw the error response if it exists, otherwise throw the error itself

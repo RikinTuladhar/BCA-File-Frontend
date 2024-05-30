@@ -6,7 +6,7 @@ const AllFiles = () => {
   const { reload, setReload } = useOutletContext();
   const [files, setFiles] = useState([]);
 
-  console.log(reload);
+  // console.log(reload);
 
   const handleDelete = (id) => {
     const done = confirm("Are you sure you want to delete?");
@@ -34,7 +34,7 @@ const AllFiles = () => {
     getAllFiles().then((res) => {
       console.log(res);
       setFiles(res);
-      console.log(reload);
+      // console.log(reload);
       // alert(res)
     });
   }, [reload]);

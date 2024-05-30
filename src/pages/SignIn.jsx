@@ -31,7 +31,7 @@ const SignIn = () => {
       SignInApi(data)
         .then((res) => {
           setReload(true);
-          console.log(res);
+          // console.log(res);
 
           toast.success("Login Success");
           if (res?.role === "USER") {

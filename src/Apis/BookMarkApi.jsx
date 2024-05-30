@@ -24,7 +24,7 @@ const BookMarkApi = () => {
 
   async function postBookmarks(file_id, user_id) {
     const endpoint = `${URL}/bookmarks/${file_id}/${user_id}`;
-    console.log(endpoint);
+    // console.log(endpoint);
     try {
       const response = await axios.post(endpoint, {}, {headers:config.headers});
       const data = await response.data.message;

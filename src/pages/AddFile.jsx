@@ -66,14 +66,15 @@ const AddFile = () => {
     const file = fileInputRef.current.files[0];
 
     if (imageUpload === null) return alert("Upload File Please ");
-    console.log(file.type);
+    // console.log(imageUpload)
+    // console.log(file.type);
     // xml != pdf -> true
     // xml != docx -> true
     // xml != pptx -> true
 
     if (file.type === "application/pdf" || file.type === "application/pptx") {
       //  return;
-      const imageRef = ref(storage, `BCAFiles/${imageUpload.name + v4()}`);
+      const imageRef = ref(storage, `BCAFiles/${ v4()+ imageUpload.name}`);
       uploadBytes(imageRef, imageUpload).then((snapshot) => {
         getDownloadURL(snapshot.ref)
           .then((url) => {

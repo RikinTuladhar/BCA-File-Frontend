@@ -9,7 +9,7 @@ const Layout = () => {
   const [reload, setReload] = useState(false);
   const [hide, setHide] = useState(false);
   const handleHide = (e) => {
-    console.log("clicked");
+    // console.log("clicked");
     setHide(!hide);
   };
   const navigate = useNavigate();

@@ -75,9 +75,9 @@ const Subject = () => {
    */
   const bookMarkHanlde = (fileId) => {
     setReload(true);
-    console.log(fileId);
+    //console.log(fileId);
     let { id } = userDetails; //user id extracted inside as there is already id taking from param
-    console.log(id);
+    //console.log(id);
     if (!id) {
       return toast.error("Something went wrong please try login again");
     }
