@@ -18,7 +18,7 @@ const NavBar = () => {
     setReload(!reload);
     navigate("/");
     setIsLogIn(false);
-    setUserDetails({});
+    // setUserDetails("");
   };
   // alert("Token: " + token);
   return (

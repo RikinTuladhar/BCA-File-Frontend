@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import { UserContext } from "../GlobalContext/UserDetailsProvider";
 const Layout = () => {
-  const { setIsLogIn,setUserDetails } = useContext(UserContext);
+  const { setIsLogIn, setUserDetails, userDetails } = useContext(UserContext);
+  const [reload, setReload] = useState(false);
   const [hide, setHide] = useState(false);
   const handleHide = (e) => {
     console.log("clicked");
@@ -14,13 +15,13 @@ const Layout = () => {
     localStorage.removeItem("token");
     navigate("/");
     setIsLogIn(false);
-    setUserDetails({})
+    setReload(!reload);
   };
 
   return (
     <>
       <h1 className="absolute top-[5%] left-[50%]  text-3xl italic font-bold ">
-        Welcome Admin
+        Welcome Admin {userDetails?.name}
       </h1>
       <button
         onClick={handleHide}
@@ -124,7 +125,7 @@ const Layout = () => {
       <div className="p-4 mt-10 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
           <div className="gap-4 mb-4">
-            <Outlet />
+            <Outlet context={{ reload, setReload }} />
           </div>
         </div>
       </div>

@@ -3,15 +3,25 @@ import UserApi from "../Apis/UserApi";
 import { reloadConext } from "./ReloadProvider";
 import { toast } from "react-toastify";
 import { useFetcher } from "react-router-dom";
-
+import SubjectApi from "../Apis/SubjectApi";
 export const UserContext = createContext();
 
 const UserDetailsProvider = ({ children }) => {
+  const { getSubjectAll } = SubjectApi();
+  const { getUserByToken } = UserApi();
   const { reload, setReload } = useContext(reloadConext);
-  //handling time required from server response
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [formattedTime, setFormattedTime] = useState("");
   const [time, setTime] = useState(130);
   const [isLogIn, setIsLogIn] = useState(false);
+  const [userDetails, setUserDetails] = useState({
+    id: "",
+    firstName: "",
+    lastname: "",
+    username: "",
+    role: "",
+  });
+  const [apiLoaded, setApiLoaded] = useState(false);
 
   useEffect(() => {
     if (time > 0) {
@@ -19,10 +29,49 @@ const UserDetailsProvider = ({ children }) => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
 
-      // Clear the interval when the component unmounts or when the time reaches 0
       return () => clearInterval(timerId);
     }
   }, [time]);
+
+  useEffect(() => {
+    setFormattedTime(formatTime(time));
+  }, [time]);
+
+  useEffect(() => {
+    getSubjectAll()
+      .then((res) => {
+        //to start the timer throwing a get api
+        if (!apiLoaded) {
+          setApiLoaded(true);
+        }
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    //if login or not.
+    if (isLogIn) {
+      //when sign in then it set to true else its false
+      getUserByToken(token)
+        .then((res) => {
+          setUserDetails(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setUserDetails({
+        id: "",
+        firstName: "",
+        lastname: "",
+        username: "",
+        role: "",
+      });
+      setToken(null);
+      localStorage.removeItem("token");
+    }
+  }, [token, isLogIn]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -32,43 +81,6 @@ const UserDetailsProvider = ({ children }) => {
       .padStart(2, "0")}`;
   };
 
-  const { getUserByToken } = UserApi();
-  const [token, setToken] = useState(localStorage.getItem("token")); //on relad this takes data from local, and for quick access without reload it set directly when taken from api
-  const [userDetails, setUserDetails] = useState({
-    id: "",
-    firstName: "",
-    lastname: "",
-    username: "",
-    role: "",
-  });
-  // console.log(formatTime(time));
-
-  useEffect(() => {
-    setFormattedTime(formatTime(time));
-  }, [time]);
-
-  //for timer checking if api was hit or not?
-  const [apiLoaded, setApiLoaded] = useState(false);
-
-  useEffect(() => {
-    formatTime(time); //starting timer
-    getUserByToken(token)
-      .then((res) => {
-        // console.log(res);
-        if (!apiLoaded) {
-          //from flase -> true
-          setApiLoaded(true); //api hit true
-        }
-        setUserDetails(res);
-        // console.log(res)
-      })
-      .catch((err) => {
-        if (!apiLoaded) {
-          setApiLoaded(true);
-        }
-        console.log(err);
-      });
-  }, [token,isLogIn]);
   return (
     <UserContext.Provider
       value={{

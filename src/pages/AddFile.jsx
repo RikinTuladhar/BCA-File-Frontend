@@ -62,6 +62,7 @@ const AddFile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setButtonClick(true);
+    toast("Uploading...");
     const file = fileInputRef.current.files[0];
 
     if (imageUpload === null) return alert("Upload File Please ");
@@ -87,7 +88,7 @@ const AddFile = () => {
           .then((res) => {
             setButtonClick(false);
             toast.success("Uploaded successfully");
-            setReload(!reload);
+            setReload(true);
             setImageUpload(null);
             setData({
               name: "",
@@ -97,6 +98,7 @@ const AddFile = () => {
             setSubjectId("");
             setSubjects([]);
             setSubjectsFromApi([]);
+            setReload(false);
           });
       });
     } else {

@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FilesApi from "../Apis/FilesApi";
+import { useOutletContext } from "react-router-dom";
 const AllFiles = () => {
   const { getAllFiles, deleteFile } = FilesApi();
-  const [files, setFiles] = useState([
-    {
-      id: "",
-      name: "",
-      filePath: "",
-      subjectName: "",
-    },
-  ]);
+  const { reload, setReload } = useOutletContext();
+  const [files, setFiles] = useState([]);
+
+  console.log(reload);
 
   const handleDelete = (id) => {
-    if (Number.isInteger(id)) {
+    const done = confirm("Are you sure you want to delete?");
+    // setReload((reload) => !reload);
+
+    if (done) {
       deleteFile(id)
         .then((res) => {
-          alert("Delete file");
+          // alert("Delete file");
+          setReload((prev) => !prev);
         })
         .catch((err) => {
           alert(err);
           console.log(err);
         });
+      // setReload(false);
+    } else {
+      setReload(true);
+      setReload(false);
+      return;
     }
   };
 
@@ -28,8 +34,10 @@ const AllFiles = () => {
     getAllFiles().then((res) => {
       console.log(res);
       setFiles(res);
+      console.log(reload);
+      // alert(res)
     });
-  }, []);
+  }, [reload]);
   return (
     <>
       <div class="relative overflow-x-auto">
@@ -55,26 +63,28 @@ const AllFiles = () => {
             </tr>
           </thead>
           <tbody>
-            {files?.map((file, index) => (
-              <tr class=" border-b dark:bg-gray-800 ">
-                <th class="px-6 py-4"> {index}</th>
-                <th class="px-6 py-4"> {file.name}</th>
-                <th class="px-6 py-4"> {file.subjectName}</th>
-                <th class="px-6 py-4">
-                  {" "}
-                  <a target="_blank" href={`${file.filePath}`}>
-                    View
-                  </a>
-                </th>
-                <th
-                  class="px-6 py-4 cursor-pointer "
-                  onClick={(e) => handleDelete(file.id)}
-                >
-                  {" "}
-                  Delete
-                </th>
-              </tr>
-            ))}
+            {files?.length > 0
+              ? files?.map((file, index) => (
+                  <tr class=" border-b dark:bg-gray-800 ">
+                    <th class="px-6 py-4"> {index + 1}</th>
+                    <th class="px-6 py-4"> {file.name}</th>
+                    <th class="px-6 py-4"> {file.subjectName}</th>
+                    <th class="px-6 py-4">
+                      {" "}
+                      <a target="_blank" href={`${file.filePath}`}>
+                        View
+                      </a>
+                    </th>
+                    <th
+                      class="px-6 py-4 cursor-pointer "
+                      onClick={(e) => handleDelete(file.id)}
+                    >
+                      {" "}
+                      Delete
+                    </th>
+                  </tr>
+                ))
+              : ""}
           </tbody>
         </table>
       </div>
