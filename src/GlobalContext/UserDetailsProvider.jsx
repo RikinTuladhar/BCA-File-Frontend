@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import UserApi from "../Apis/UserApi";
 import { reloadConext } from "./ReloadProvider";
 import { toast } from "react-toastify";
+import { useFetcher } from "react-router-dom";
 
 export const UserContext = createContext();
 
@@ -10,6 +11,7 @@ const UserDetailsProvider = ({ children }) => {
   //handling time required from server response
   const [formattedTime, setFormattedTime] = useState("");
   const [time, setTime] = useState(130);
+  const [isLogIn, setIsLogIn] = useState(false);
 
   useEffect(() => {
     if (time > 0) {
@@ -21,7 +23,6 @@ const UserDetailsProvider = ({ children }) => {
       return () => clearInterval(timerId);
     }
   }, [time]);
-
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -48,27 +49,37 @@ const UserDetailsProvider = ({ children }) => {
 
   //for timer checking if api was hit or not?
   const [apiLoaded, setApiLoaded] = useState(false);
+
   useEffect(() => {
     formatTime(time); //starting timer
     getUserByToken(token)
       .then((res) => {
         // console.log(res);
-        if(!apiLoaded){  //from flase -> true
-          setApiLoaded(true) //api hit true
+        if (!apiLoaded) {
+          //from flase -> true
+          setApiLoaded(true); //api hit true
         }
         setUserDetails(res);
         // console.log(res)
       })
       .catch((err) => {
-        if(!apiLoaded){
-          setApiLoaded(true)
+        if (!apiLoaded) {
+          setApiLoaded(true);
         }
         console.log(err);
       });
-  }, [token]);
+  }, [token,isLogIn]);
   return (
     <UserContext.Provider
-      value={{ userDetails, token, setToken, apiLoaded, formattedTime }}
+      value={{
+        userDetails,
+        token,
+        setToken,
+        apiLoaded,
+        formattedTime,
+        isLogIn,
+        setIsLogIn,
+      }}
     >
       {children}
     </UserContext.Provider>

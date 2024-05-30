@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import NavBar from '../components/NavBar'
-import UserBodyContainer from '../Format/UserBodyContainer'
-import Table from '../components/Table'
+import React, { useContext, useEffect, useState } from "react";
+import NavBar from "../components/NavBar";
+import UserBodyContainer from "../Format/UserBodyContainer";
+import Table from "../components/Table";
 import BookMarkApi from "../Apis/BookMarkApi";
 import { reloadConext } from "../GlobalContext/ReloadProvider";
 import { UserContext } from "../GlobalContext/UserDetailsProvider";
@@ -11,21 +11,21 @@ const RecentlyVisited = () => {
   const [recentlyViewed, setRecentlyViewed] = useState([]);
   const { userDetails } = useContext(UserContext);
   const { getBookmarks, postBookmarks } = BookMarkApi();
-  const {reload,setReload} = useContext(reloadConext)
+  const { reload, setReload } = useContext(reloadConext);
   const { id } = userDetails;
   const bookMarkHanlde = (fileId) => {
-    setReload(true)
-    console.log(fileId)
+    setReload(true);
+    console.log(fileId);
     postBookmarks(fileId, id)
       .then((res) => {
         // alert(res)
         toast.success(res);
         console.log(res);
-        setReload(false)
+        setReload(false);
       })
       .catch((err) => console.log(err));
   };
-  
+
   useEffect(() => {
     getBookmarks(id)
       .then((res) => {
@@ -35,14 +35,15 @@ const RecentlyVisited = () => {
       .catch((err) => {
         console.log(err);
       });
-      setReload(true)
-      return(()=>{
-        setReload(false)
-      })
-  }, [id,reload]);
+    setReload(true);
+    return () => {
+      setReload(false);
+    };
+  }, [id, reload]);
 
   useEffect(() => {
     const storedData = sessionStorage.getItem("recentlyViewed");
+    toast.info("Data will be lost if you close the browser");
     if (storedData) {
       setRecentlyViewed(JSON.parse(storedData));
     }
@@ -51,7 +52,7 @@ const RecentlyVisited = () => {
   // console.log(recentlyViewed);
   return (
     <>
-    <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={2000}
         hideProgressBar={false}
@@ -63,13 +64,13 @@ const RecentlyVisited = () => {
         pauseOnHover
         theme="dark"
       />
-     <NavBar/>
-     <UserBodyContainer>
-        <h1 className='text-3xl font-bold'>Recently visited Files</h1>
-        <Table data={recentlyViewed}    bookMarkHanlde={bookMarkHanlde}/>
-        </UserBodyContainer> 
+      <NavBar />
+      <UserBodyContainer>
+        <h1 className="text-3xl font-bold">Recently visited files</h1>
+        <Table data={recentlyViewed} bookMarkHanlde={bookMarkHanlde} />
+      </UserBodyContainer>
     </>
-  )
-}
+  );
+};
 
-export default RecentlyVisited
+export default RecentlyVisited;

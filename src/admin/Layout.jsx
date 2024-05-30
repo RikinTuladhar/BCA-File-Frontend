@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-
+import { UserContext } from "../GlobalContext/UserDetailsProvider";
 const Layout = () => {
+  const { setIsLogIn,setUserDetails } = useContext(UserContext);
   const [hide, setHide] = useState(false);
   const handleHide = (e) => {
     console.log("clicked");
     setHide(!hide);
   };
   const navigate = useNavigate();
+
   const handleSignOut = (e) => {
     localStorage.removeItem("token");
     navigate("/");
+    setIsLogIn(false);
+    setUserDetails({})
   };
 
   return (

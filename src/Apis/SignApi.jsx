@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../GlobalContext/UserDetailsProvider";
 const SignApi = () => {
-  const { setToken } = useContext(UserContext);
+  const { setToken, isLogIn, setIsLogIn } = useContext(UserContext);
   const base = "https://bca-file-backend.onrender.com";
 
   async function SignInApi(value) {
@@ -15,6 +15,7 @@ const SignApi = () => {
       console.log(data);
       setToken(data);
       localStorage.setItem("token", data);
+      setIsLogIn(true)
       const redirect = await axios.get(`${base}/getUser/${data}`, {
         headers: {
           Authorization: `Bearer ${data}`,

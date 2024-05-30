@@ -8,7 +8,7 @@ const NavBar = () => {
   const [click, setClick] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const { reload, setReload } = useContext(reloadConext);
-  const { userDetails } = useContext(UserContext);
+  const { userDetails,isLogIn,setIsLogIn } = useContext(UserContext);
   const { role } = userDetails;
   // console.log(role);
   const navigate = useNavigate();
@@ -17,6 +17,8 @@ const NavBar = () => {
     setToken("");
     setReload(!reload);
     navigate("/");
+    setIsLogIn(false)
+    setUserDetails({})
   };
   // alert("Token: " + token);
   return (

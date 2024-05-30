@@ -15,7 +15,7 @@ const BookMarkApi = () => {
     try {
       const response = await axios.get(endpoint, config);
       const data = await response.data;
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       throw new Error("Not Found Bookmarks");
@@ -28,7 +28,7 @@ const BookMarkApi = () => {
     try {
       const response = await axios.post(endpoint, {}, {headers:config.headers});
       const data = await response.data.message;
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       throw new Error("Error handling bookmarks: " + error);

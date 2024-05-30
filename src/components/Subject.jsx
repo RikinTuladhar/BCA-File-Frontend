@@ -41,12 +41,17 @@ const Subject = () => {
   //     ])
   //   );
   // };
-  const recentVisited = (clickedId, clickedName, clickedFilePath,clickedsubjectName) => {
+  const recentVisited = (
+    clickedId,
+    clickedName,
+    clickedFilePath,
+    clickedsubjectName
+  ) => {
     const newItem = {
       id: clickedId,
       name: clickedName,
       filePath: clickedFilePath,
-      subjectName:clickedsubjectName
+      subjectName: clickedsubjectName,
     };
 
     // Get the existing items from sessionStorage
@@ -73,14 +78,20 @@ const Subject = () => {
     console.log(fileId);
     let { id } = userDetails; //user id extracted inside as there is already id taking from param
     console.log(id);
+    if (!id) {
+      return toast.error("Something went wrong please try login again");
+    }
     postBookmarks(fileId, id)
       .then((res) => {
         // alert(res);
-        toast.success(res)
+        toast.success(res);
         console.log(res);
         setReload(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong please try login again");
+      });
   };
 
   useEffect(() => {
