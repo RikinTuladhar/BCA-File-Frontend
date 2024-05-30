@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FilesApi from "../Apis/FilesApi";
 const AllFiles = () => {
-  const { getAllFiles } = FilesApi();
+  const { getAllFiles, deleteFile } = FilesApi();
   const [files, setFiles] = useState([
     {
       id: "",
@@ -11,9 +11,18 @@ const AllFiles = () => {
     },
   ]);
 
-  const handleDelete=(e)=>{
-
-  }
+  const handleDelete = (id) => {
+    if (Number.isInteger(id)) {
+      deleteFile(id)
+        .then((res) => {
+          alert("Delete file");
+        })
+        .catch((err) => {
+          alert(err);
+          console.log(err);
+        });
+    }
+  };
 
   useEffect(() => {
     getAllFiles().then((res) => {
@@ -53,9 +62,17 @@ const AllFiles = () => {
                 <th class="px-6 py-4"> {file.subjectName}</th>
                 <th class="px-6 py-4">
                   {" "}
-                  <a target="_blank" href={`${file.filePath}`}>View</a>
+                  <a target="_blank" href={`${file.filePath}`}>
+                    View
+                  </a>
                 </th>
-                <th class="px-6 py-4 cursor-pointer " onClick={handleDelete}> Delete</th>
+                <th
+                  class="px-6 py-4 cursor-pointer "
+                  onClick={(e) => handleDelete(file.id)}
+                >
+                  {" "}
+                  Delete
+                </th>
               </tr>
             ))}
           </tbody>

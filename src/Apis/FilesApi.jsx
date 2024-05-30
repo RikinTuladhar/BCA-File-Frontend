@@ -40,7 +40,23 @@ const FilesApi = () => {
       throw new Error("Error when submitting file");
     }
   }
-  return { getFiles,getAllFiles };
+
+  async function deleteFile(id) {
+    const endpoint = `${URL}/file/delete/${id}`;
+    try {
+      const response = await axios.delete(endpoint, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.data;
+      console.log(data);
+      return data;
+    } catch (error) {
+      throw new Error("Error when deleting file");
+    }
+  }
+  return { getFiles, getAllFiles,deleteFile };
 };
 
 export default FilesApi;
