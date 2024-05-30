@@ -72,7 +72,7 @@ const AddFile = () => {
     // xml != docx -> true
     // xml != pptx -> true
 
-    if (file.type === "application/pdf" || file.type === "application/pptx") {
+    if (file.type === "application/pdf" || file.type === "application/pptx" || file.type === "application/docx" ) {
       //  return;
       const imageRef = ref(storage, `BCAFiles/${ v4()+ imageUpload.name}`);
       uploadBytes(imageRef, imageUpload).then((snapshot) => {
@@ -175,7 +175,7 @@ const AddFile = () => {
             type="file"
             ref={fileInputRef}
             onChange={(e) => setImageUpload(e.target.files[0])}
-            accept=".pdf,.pptx"
+            accept=".pdf,.pptx,.docx"
           />
         </div>
         <Button
