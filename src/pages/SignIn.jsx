@@ -31,14 +31,22 @@ const SignIn = () => {
       SignInApi(data)
         .then((res) => {
           setReload(true);
+          console.log(res);
+
           toast.success("Login Success");
-          setTimeout(() => {
-            setReload(false);
-            setClicked(false);
-            navigate("/");
-          }, 3000);
-          // alert(res)
-          localStorage.setItem("token", res);
+          if (res?.role === "USER") {
+            setTimeout(() => {
+              setReload(false);
+              setClicked(false);
+              navigate("/");
+            }, 3000);
+          } else {
+            setTimeout(() => {
+              setReload(false);
+              setClicked(false);
+              navigate("/admin");
+            }, 3000);
+          }
         })
         .catch((err) => {
           toast.error("Username or password is invalid");

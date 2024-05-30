@@ -23,7 +23,7 @@ const AddFile = () => {
   const { getSubjectAll } = SubjectApi();
   const { id } = userDetails;
   const [imageUpload, setImageUpload] = useState(null);
-  const[buttonClick,setButtonClick] = useState(false)
+  const [buttonClick, setButtonClick] = useState(false);
   const [data, setData] = useState({
     name: "",
     filePath: "",
@@ -39,11 +39,6 @@ const AddFile = () => {
   const [subjects, setSubjects] = useState([]);
   const [subjectsFromApi, setSubjectsFromApi] = useState([]);
   const [selectedSem, setSelectedSem] = useState(1);
-  // console.log(subjects);
-  // console.log(subjectsFromApi);
-  // console.log(selectedSem);
-  // console.log(subjectId);
-  //subjects fetched from api
   useEffect(() => {
     getSubjectAll()
       .then((res) => {
@@ -66,7 +61,7 @@ const AddFile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setButtonClick(true)
+    setButtonClick(true);
     const file = fileInputRef.current.files[0];
 
     if (imageUpload === null) return alert("Upload File Please ");
@@ -75,11 +70,7 @@ const AddFile = () => {
     // xml != docx -> true
     // xml != pptx -> true
 
-    if (
-      file.type !== "application/pdf" ||
-      file.type !== "application/docx" ||
-      file.type !== "application/pptx"
-    ) {
+    if (file.type === "application/pdf" || file.type === "application/pptx") {
       //  return;
       const imageRef = ref(storage, `BCAFiles/${imageUpload.name + v4()}`);
       uploadBytes(imageRef, imageUpload).then((snapshot) => {
@@ -94,7 +85,7 @@ const AddFile = () => {
             // Do something with the URL (e.g., save it to the state)
           })
           .then((res) => {
-            setButtonClick(false)
+            setButtonClick(false);
             toast.success("Uploaded successfully");
             setReload(!reload);
             setImageUpload(null);
@@ -109,7 +100,7 @@ const AddFile = () => {
           });
       });
     } else {
-      toast.error("Please upload a valid file. pdf or docx or pptx");
+      toast.error("Please upload a valid file. pdf or pptx");
     }
   };
 
@@ -127,12 +118,17 @@ const AddFile = () => {
         pauseOnHover
         theme="dark"
       />
-      <NavBar />
+
       <h1 className="text-2xl font-bold">File Upload</h1>
       <hr />
       <form className="w-full md:w-[auto]" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
-          <InputField label={"File Name"} value={data.name} onChange={handleChange} name="name" />
+          <InputField
+            label={"File Name"}
+            value={data.name}
+            onChange={handleChange}
+            name="name"
+          />
           <SelectComponent
             label={"Semester"}
             name={"semester"}
@@ -176,10 +172,15 @@ const AddFile = () => {
             type="file"
             ref={fileInputRef}
             onChange={(e) => setImageUpload(e.target.files[0])}
-            accept=".pdf,.docx,.pptx"
+            accept=".pdf,.pptx"
           />
         </div>
-        <Button  disabled={ buttonClick? true :false }  type="submit" text="Submit" className="mb-3" />
+        <Button
+          disabled={buttonClick ? true : false}
+          type="submit"
+          text="Submit"
+          className="mb-3"
+        />
       </form>
     </Container>
   );

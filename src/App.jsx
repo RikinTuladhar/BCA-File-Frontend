@@ -13,6 +13,8 @@ import About from "./pages/About";
 import Projects from "./pages/Projects";
 import BookMarks from "./pages/BookMarks";
 import RecentlyVisited from "./pages/RecentlyVisited";
+import Layout from "./admin/Layout";
+import AllFiles from "./admin/AllFiles";
 function App() {
   const router = createBrowserRouter([
     {
@@ -39,10 +41,7 @@ function App() {
       path: "/signin",
       element: <SignIn />,
     },
-    {
-      path: "/addFile",
-      element: <AddFile />,
-    },
+
     {
       path: "/about",
       element: <About />,
@@ -61,6 +60,22 @@ function App() {
     },
 
     {
+      path: "/admin",
+      element: <Layout />,
+      children: [
+        {
+          path: "/admin/allFiles",
+          element: <AllFiles />,
+        },
+
+        {
+          path: "/admin/addFile",
+          element: <AddFile />,
+        },
+      ],
+    },
+
+    {
       path: "/semester/:id",
       element: <Semester />,
       children: [
@@ -74,10 +89,9 @@ function App() {
 
   return (
     <ReloadProvider>
-   
-        <UserDetailsProvider>
-          <RouterProvider router={router}></RouterProvider>
-        </UserDetailsProvider>
+      <UserDetailsProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </UserDetailsProvider>
     </ReloadProvider>
   );
 }

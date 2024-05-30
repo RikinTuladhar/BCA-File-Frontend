@@ -1,31 +1,30 @@
-import axios from 'axios'
-import React from 'react'
+import axios from "axios";
+import React from "react";
 
 const UserApi = () => {
-  const URL = "https://bca-file-backend.onrender.com"
+  const URL = "https://bca-file-backend.onrender.com";
 
-//   console.log(token)
+  //   console.log(token)
   async function getUserByToken(token) {
     const config = {
-        headers: {
-          Authorization: `Bearer ${token}`, // Set the token in the 'Authorization' header
-        },
-      };
-    
-    const endpoint = `${URL}/getUser/${token}`
+      headers: {
+        Authorization: `Bearer ${token}`, // Set the token in the 'Authorization' header
+      },
+    };
+
+    const endpoint = `${URL}/getUser/${token}`;
     // console.log(endpoint)
     try {
       // console.log(endpoint)
-      const response = await axios.get(endpoint,config)
-      const data = await response.data
+      const response = await axios.get(endpoint, config);
+      const data = await response.data;
       // console.log(data)
-      return data
+      return data;
     } catch (error) {
-      throw new Error( "Error when fetching data" +error);
+      throw new Error("Error when fetching data" + error);
     }
-
   }
-    return {getUserByToken}
-}
+  return { getUserByToken };
+};
 
-export default UserApi
+export default UserApi;
