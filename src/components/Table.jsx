@@ -55,7 +55,7 @@ const Table = ({ data, recentVisited, bookMarkHanlde }) => {
                 </td>
                 {token != null ? (
                   <td
-                    className="relative flex h-[7vh] cursor-pointer"
+                    className="relative  h-[7vh] cursor-pointer"
                     onClick={(e) => bookMarkHanlde(data?.id)}
                   >
                     <FaBookmark
