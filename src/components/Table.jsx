@@ -26,36 +26,68 @@ const Table = ({ data, recentVisited, bookMarkHanlde }) => {
                 <td>{i + 1}</td>
                 <td>{data?.name}</td>
                 <td>{data?.subjectName}</td>
-                <td>
+                <td className="relative px-5">
                   <a
                     onClick={(e) =>
-                      recentVisited(data?.id, data?.name, data?.filePath, data?.subjectName)
+                      recentVisited(
+                        data?.id,
+                        data?.name,
+                        data?.filePath,
+                        data?.subjectName
+                      )
                     }
                     href={`${data?.filePath}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center"
+                    className=""
                   >
-                   <FaEye style={{width:"30px",height:"20px"}} />
+                    <FaEye
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        width: "30px",
+                        height: "20px",
+                      }}
+                    />
                   </a>
                 </td>
                 {token != null ? (
                   <td
-                    className="flex items-center justify-center py-2 cursor-pointer"
+                    className="relative flex h-[7vh] cursor-pointer"
                     onClick={(e) => bookMarkHanlde(data?.id)}
                   >
-                  <FaBookmark style={{width:"14px",height:"25px"}} />
+                    <FaBookmark
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        width: "14px",
+                        height: "25px",
+                      }}
+                    />
                   </td>
-                ):(
+                ) : (
                   <td
-                  className="flex items-center justify-center cursor-pointer"
-                  onClick={(e) => navigate("/signin")}
-                >
-                <FaBookmark style={{width:"14px",height:"25px"}} />
-                </td>
+                    className="relative h-[7vh] cursor-pointer "
+                    onClick={(e) => navigate("/signin")}
+                  >
+                    <span className="w-full h-full">
+                      <FaBookmark
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%,-50%)",
+                          width: "14px",
+                          height: "25px",
+                        }}
+                      />
+                    </span>
+                  </td>
                 )}
-
-
               </tr>
             ))
           ) : (

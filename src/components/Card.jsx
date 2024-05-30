@@ -32,7 +32,12 @@ const Card = ({ name }) => {
   }
   return (
     <div className="hover:-translate-y-3 mx-auto p-9 bg-white w-[200px] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300">
-      <img className="rounded-xl" src={"/Images/folderpng.png"} alt="" />
+      <img
+        className="rounded-xl"
+        onError={(e) => (e.target.src = "/Images/folderpng.png")}
+        src={"/Images/folderpng.png"}
+        alt=""
+      />
       <div className="flex items-center justify-between">
         {name != null ? (
           <div>
