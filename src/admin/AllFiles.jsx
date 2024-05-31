@@ -32,7 +32,7 @@ const AllFiles = () => {
 
   useEffect(() => {
     getAllFiles().then((res) => {
-      console.log(res);
+      // console.log(res);
       setFiles(res);
       // console.log(reload);
       // alert(res)

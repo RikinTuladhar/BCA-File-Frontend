@@ -8,6 +8,7 @@ const Layout = () => {
   const { setIsLogIn, setUserDetails, userDetails } = useContext(UserContext);
   const [reload, setReload] = useState(false);
   const [hide, setHide] = useState(false);
+  // console.log(userDetails);
   const handleHide = (e) => {
     // console.log("clicked");
     setHide(!hide);
@@ -23,9 +24,11 @@ const Layout = () => {
 
   return (
     <>
-      <h1 className="absolute md:top-[5%] md:left-[50%]  left-[25%]  text-lg md:text-3xl italic font-bold ">
-        Welcome Admin {userDetails?.name}
-      </h1>
+      <div>
+        <h1 className="text-lg italic font-bold md:text-3xl">
+          Welcome Admin `{userDetails?.firstName}`
+        </h1>
+      </div>
       <button
         onClick={handleHide}
         data-drawer-target="separator-sidebar"
@@ -86,7 +89,7 @@ const Layout = () => {
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <FaSignOutAlt  className="w-[30px] h-[30px] md:ml-1  ml-1" />
+                <FaSignOutAlt className="w-[30px] h-[30px] md:ml-1  ml-1" />
                 <span className="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
               </Link>
             </li>

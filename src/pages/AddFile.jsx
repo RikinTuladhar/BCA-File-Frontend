@@ -21,7 +21,7 @@ const AddFile = () => {
   const { reload, setReload } = useContext(reloadConext);
   const { userDetails, token } = useContext(UserContext);
   const { getSubjectAll } = SubjectApi();
-  const { id } = userDetails;
+  // const { id } = userDetails;
   const [imageUpload, setImageUpload] = useState(null);
   const [buttonClick, setButtonClick] = useState(false);
   const [data, setData] = useState({
@@ -43,6 +43,7 @@ const AddFile = () => {
     getSubjectAll()
       .then((res) => {
         setSubjectsFromApi(res);
+        // console.log(res)
       })
       .catch((err) => console.log(err));
   }, [reload]);
@@ -62,48 +63,69 @@ const AddFile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setButtonClick(true);
-    toast("Uploading...");
+
     const file = fileInputRef.current.files[0];
+    const { name } = data;
+    if (name && subjectId && selectedSem) {
+      toast("Uploading...");
+      if (imageUpload === null) {
+        toast.info("Upload File Please ");
+        setButtonClick(false);
+        return;
+      }
+      // console.log(imageUpload)
+      // console.log(file.type);
+      // xml != pdf -> true
+      // xml != docx -> true
+      // xml != pptx -> true
+      // console.log(file);
+      // console.log(file.type);
+      const typeArray = ["pdf", "docx", "pptx"];
+      const fileName = file.name;
+      const fileType = fileName.split(".");
+      const extension = fileType[fileType.length - 1];
 
-    if (imageUpload === null) return alert("Upload File Please ");
-    // console.log(imageUpload)
-    // console.log(file.type);
-    // xml != pdf -> true
-    // xml != docx -> true
-    // xml != pptx -> true
-
-    if (file.type === "application/pdf" || file.type === "application/pptx" || file.type === "application/docx" ) {
-      //  return;
-      const imageRef = ref(storage, `BCAFiles/${ v4()+ imageUpload.name}`);
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            // console.log(url);
-            return axios.post(
-              `https://bca-file-backend.onrender.com/file/${subjectId}/${userDetails?.id}`,
-              { ...data, filePath: url },
-              config
-            );
-            // Do something with the URL (e.g., save it to the state)
-          })
-          .then((res) => {
-            setButtonClick(false);
-            toast.success("Uploaded successfully");
-            setReload(true);
-            setImageUpload(null);
-            setData({
-              name: "",
-              filePath: "",
+      // console.log(fileName);
+      // console.log(typeArray);
+      // console.log(fileType);
+      // console.log(extension);
+      if (typeArray.includes(extension)) {
+        //  return;
+        const imageRef = ref(storage, `BCAFiles/${v4() + imageUpload.name}`);
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              // console.log(url);
+              return axios.post(
+                `https://bca-file-backend.onrender.com/file/${subjectId}/${userDetails?.id}`,
+                { ...data, filePath: url },
+                config
+              );
+              // Do something with the URL (e.g., save it to the state)
+            })
+            .then((res) => {
+              setButtonClick(false);
+              toast.success("Uploaded successfully");
+              setReload(true);
+              setImageUpload(null);
+              setData({
+                name: "",
+                filePath: "",
+              });
+              setSelectedSem(1);
+              setSubjectId("");
+              setSubjects([]);
+              setSubjectsFromApi([]);
+              setReload(false);
+              setButtonClick(false);
             });
-            setSelectedSem(1);
-            setSubjectId("");
-            setSubjects([]);
-            setSubjectsFromApi([]);
-            setReload(false);
-          });
-      });
+        });
+      } else {
+        toast.error("Please upload a valid file. pdf or pptx or docx");
+      }
     } else {
-      toast.error("Please upload a valid file. pdf or pptx");
+      toast.error("Please fill all fields");
+      setButtonClick(false);
     }
   };
 
@@ -124,7 +146,7 @@ const AddFile = () => {
 
       <h1 className="text-2xl font-bold">File Upload</h1>
       <hr />
-      <form className="w-full md:w-[auto]" onSubmit={handleSubmit}>
+      <form className="w-full mb-3 md:w-[auto]" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
           <InputField
             label={"File Name"}
@@ -163,7 +185,7 @@ const AddFile = () => {
               Select Semester First
             </option>
             {subjects?.map((subject) => (
-              <option key={subject.id} value={subject.id}>
+              <option key={subject?.id} value={subject?.id}>
                 {subject.name}
               </option>
             ))}
@@ -178,12 +200,14 @@ const AddFile = () => {
             accept=".pdf,.pptx,.docx"
           />
         </div>
-        <Button
-          disabled={buttonClick ? true : false}
-          type="submit"
-          text="Submit"
-          className="mb-3"
-        />
+        <div className="grid items-center w-full mb-2place-items-center">
+          <Button
+            disabled={buttonClick ? true : false}
+            type="submit"
+            text="Submit"
+            className="self-center justify-self-center"
+          />
+        </div>
       </form>
     </Container>
   );
