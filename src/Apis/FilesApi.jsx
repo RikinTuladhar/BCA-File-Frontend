@@ -18,7 +18,8 @@ const FilesApi = () => {
   async function getFiles(id) {
     //   /file/subjectid/1
     // https://bca-file-backend.onrender.com/file/subjectid/1
-    const Endpoint = `${URL}/file/subjectid/${id}`;
+    // const Endpoint = `${URL}/file/subjectid/${id}`;
+    const Endpoint = `https://kbc-next-js.vercel.app/api/files/${id}`;
     // console.log(Endpoint)
     try {
       const response = await axios.get(Endpoint);
@@ -56,7 +57,7 @@ const FilesApi = () => {
       throw new Error("Error when deleting file");
     }
   }
-  return { getFiles, getAllFiles,deleteFile };
+  return { getFiles, getAllFiles, deleteFile };
 };
 
 export default FilesApi;
