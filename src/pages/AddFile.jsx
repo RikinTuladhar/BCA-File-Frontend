@@ -43,15 +43,18 @@ const AddFile = () => {
     getSubjectAll()
       .then((res) => {
         setSubjectsFromApi(res);
+        console.log(res)
         // console.log(res)
       })
       .catch((err) => console.log(err));
   }, [reload]);
 
   useEffect(() => {
+    console.log(selectedSem)
     const filtered = subjectsFromApi?.filter(
       (item) => item.semesterId === parseInt(selectedSem)
     );
+    console.log(filtered)
     setSubjects(filtered?.length > 0 ? filtered : []);
   }, [selectedSem, subjectsFromApi, reload]);
 

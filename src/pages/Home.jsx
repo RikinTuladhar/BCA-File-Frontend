@@ -4,8 +4,18 @@ import { Link, Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { UserBodyContainer } from "../Imports/ImportAll";
 import { UserContext } from "../GlobalContext/UserDetailsProvider";
+import UserApi from "../Apis/UserApi";
 const Home = () => {
+  const {getUserByToken} = UserApi();
   const { apiLoaded, formattedTime } = useContext(UserContext);
+  const token = JSON.parse(localStorage.getItem("token"))
+  // console.log(token)
+  useEffect(()=>{
+    getUserByToken(token)
+    .then((res)=>{
+      // console.log(res)
+    }).catch((err)=>console.log("No user found with token"))
+  },[])
   const [data, setData] = useState([
     { id: 1, name: "Semester 1" },
     { id: 2, name: "Semester 2" },

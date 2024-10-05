@@ -12,7 +12,7 @@ const SubjectApi = () => {
       // console.log(endpoint);
       const response = await axios.get(endpoint);
       const data = await response.data;
-      // console.log(data);
+      //console.log(data);
       return data;
     } catch (error) {
       console.error(error);
@@ -26,7 +26,7 @@ const SubjectApi = () => {
       // console.log(endpoint);
       const response = await axios.get(endpoint);
       const data = await response.data;
-      // console.log(data);
+     // console.log(data);
       return data;
     } catch (error) {
       console.error(error);
