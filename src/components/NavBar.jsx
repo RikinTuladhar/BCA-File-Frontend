@@ -26,6 +26,7 @@ const NavBar = () => {
       transition={{ duration: 0.5 }}
       className="glassmorpf bg-gradient-to-br from-[#d6e7ef] to-[#e1ecf8] px-6 py-2 rounded-t-[20px] bg-[rgb(241,250,254)] shadow-2xl lg:px-16 lg:py-0"
     >
+     
       <div className="grid place-items-center lg:hidden">
         <Link
           to={"/"}

@@ -4,7 +4,7 @@ import { Link, useParams, Outlet, useLocation } from "react-router-dom";
 // import BreadScrum from "./BreadScrum";
 import SubjectCard from "./SubjectCard";
 import NavBar from "./NavBar";
-
+import { IoArrowBackCircle } from "react-icons/io5";
 import SubjectApi  from "../Apis/SubjectApi";
 
 import { UserBodyContainer } from "../Imports/ImportAll";
@@ -139,6 +139,7 @@ const Semester = () => {
           </div>
         )}
         <Outlet /> 
+        <button onClick={()=>window.history.back()} className="fixed bottom-10 right-3 md:right-[10%]"><IoArrowBackCircle size={50} /></button>
       </UserBodyContainer>
     </>
   );

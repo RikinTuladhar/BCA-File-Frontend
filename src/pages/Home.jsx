@@ -37,6 +37,7 @@ const Home = () => {
           Waiting for server to response please wait, maximum time for {formattedTime} !!!
         </div>
       )}
+       
       <UserBodyContainer>
         {data?.map((card, id) => (
           <Link key={id} to={`/semester/${card.id}`}>
