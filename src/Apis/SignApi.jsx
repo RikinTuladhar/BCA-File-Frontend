@@ -14,7 +14,7 @@ const SignApi = () => {
       const data = await response.data.token;
       // console.log(data);
       setToken(data);
-      localStorage.setItem("token", data);
+      localStorage.setItem("kbc_token", data);
       setIsLogIn(true)
       const redirect = await axios.get(`${base}/getUser/${data}`, {
         headers: {

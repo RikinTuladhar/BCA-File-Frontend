@@ -47,7 +47,7 @@ const FilesApi = () => {
     try {
       const response = await axios.delete(endpoint, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("kbc_token")}`,
         },
       });
       const data = await response.data;

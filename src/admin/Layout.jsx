@@ -16,7 +16,7 @@ const Layout = () => {
   const navigate = useNavigate();
 
   const handleSignOut = (e) => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("kbc_token");
     navigate("/");
     setIsLogIn(false);
     setReload(!reload);

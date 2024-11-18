@@ -13,7 +13,7 @@ const NavBar = () => {
   // console.log(role);
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("kbc_token");
     setToken("");
     setReload(!reload);
     navigate("/");

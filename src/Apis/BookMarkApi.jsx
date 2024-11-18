@@ -4,7 +4,7 @@ import React from "react";
 const BookMarkApi = () => {
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`, // Set the token in the 'Authorization' header
+      Authorization: `Bearer ${localStorage.getItem("kbc_token")}`, // Set the token in the 'Authorization' header
     },
   };
 

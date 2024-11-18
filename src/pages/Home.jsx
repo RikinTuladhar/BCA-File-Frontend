@@ -8,7 +8,7 @@ import UserApi from "../Apis/UserApi";
 const Home = () => {
   const {getUserByToken} = UserApi();
   const { apiLoaded, formattedTime } = useContext(UserContext);
-  const token = JSON.parse(localStorage.getItem("token"))
+  const token = JSON.parse(localStorage.getItem("kbc_token"))
   // console.log(token)
   useEffect(()=>{
     getUserByToken(token)

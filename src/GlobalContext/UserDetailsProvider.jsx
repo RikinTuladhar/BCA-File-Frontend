@@ -10,7 +10,7 @@ const UserDetailsProvider = ({ children }) => {
   const { getSubjectAll } = SubjectApi();
   const { getUserByToken } = UserApi();
   const { reload, setReload } = useContext(reloadConext);
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(localStorage.getItem("kbc_token"));
   const [formattedTime, setFormattedTime] = useState("");
   const [time, setTime] = useState(130);
   const [isLogIn, setIsLogIn] = useState(false);
@@ -69,7 +69,7 @@ const UserDetailsProvider = ({ children }) => {
         role: "",
       });
       setToken(null);
-      localStorage.removeItem("token");
+      localStorage.removeItem("kbc_token");
     }
   }, [token, isLogIn]);
 
