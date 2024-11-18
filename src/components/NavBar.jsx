@@ -39,13 +39,13 @@ const NavBar = () => {
           />
         </Link>
       </div>
-      <label
+      <div
         onClick={(e) => setClick(!click)}
         htmlFor="menu-toggle"
-        className="block cursor-pointer lg:hidden"
+        className="relative h-[2rem] right-0 cursor-pointer lg:hidden"
       >
         <svg
-          className="text-gray-900 fill-current"
+          className="absolute text-gray-900 fill-current right-1"
           xmlns="http://www.w3.org/2000/svg"
           width="20"
           height="20"
@@ -54,7 +54,7 @@ const NavBar = () => {
           <title>menu</title>
           <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
         </svg>
-      </label>
+      </div>
       <div
         className={`${
           click == true ? ` block` : `hidden`
